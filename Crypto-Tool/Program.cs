@@ -32,7 +32,7 @@ namespace Crypto_Tool
                 else if (input == "encrypt -s")
                 {
                     Console.Write("Password : ");
-                    string passwd = Console.ReadLine();
+                    string passwd = GetPassword();
 
                     Console.Write("Extension of output files : ");
                     string ext = Console.ReadLine();
@@ -45,14 +45,14 @@ namespace Crypto_Tool
                     string file = Console.ReadLine();
 
                     Console.Write("Password : ");
-                    string passwd = Console.ReadLine();
+                    string passwd = GetPassword();
 
                     Crypto_Security.EncryptFile(file, passwd, 0);
                 }
                 else if (input == "encrypt -s -o" || input == "encrypt -o -s")
                 {
                     Console.Write("Password : ");
-                    string passwd = Console.ReadLine();
+                    string passwd = GetPassword();
 
                     Crypto_Security.EncryptFolder(Environment.CurrentDirectory, passwd, 0);
                 }
@@ -62,7 +62,7 @@ namespace Crypto_Tool
                     string file = Console.ReadLine();
 
                     Console.Write("Password : ");
-                    string passwd = Console.ReadLine();
+                    string passwd = GetPassword();
 
                     Console.Write("Output file name : ");
                     string output = Console.ReadLine();
@@ -72,7 +72,7 @@ namespace Crypto_Tool
                 else if (input == "decrypt -s")
                 {
                     Console.Write("Password : ");
-                    string passwd = Console.ReadLine();
+                    string passwd = GetPassword();
 
                     Console.Write("Extension of output files : ");
                     string ext = Console.ReadLine();
@@ -85,14 +85,14 @@ namespace Crypto_Tool
                     string file = Console.ReadLine();
 
                     Console.Write("Password : ");
-                    string passwd = Console.ReadLine();
+                    string passwd = GetPassword();
 
                     Crypto_Security.EncryptFile(file, passwd, 0);
                 }
                 else if (input == "decrypt -s -o" || input == "decrypt -o -s")
                 {
                     Console.Write("Password : ");
-                    string passwd = Console.ReadLine();
+                    string passwd = GetPassword();
 
                     Crypto_Security.EncryptFile(Environment.CurrentDirectory, passwd, 0);
                 }
@@ -120,6 +120,29 @@ namespace Crypto_Tool
                     Console.WriteLine("Unknown command.");
                 }
             }
+        }
+
+        private static string GetPassword()
+        {
+            StringBuilder input = new StringBuilder();
+            while (true)
+            {
+                var key = Console.ReadKey(true);
+                if (key.Key == ConsoleKey.Enter)
+                {
+                    break;
+                }
+                if (key.Key == ConsoleKey.Backspace && input.Length > 0)
+                {
+                    input.Remove(input.Length - 1, 1);
+                }
+                else if (key.Key != ConsoleKey.Backspace)
+                {
+                    input.Append(key.KeyChar);
+                }
+            }
+            Console.Write("\n");
+            return input.ToString();
         }
     }
 }
